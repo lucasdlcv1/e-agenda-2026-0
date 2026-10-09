@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Dominio/eAgenda.Dominio.csproj" />
+    <Project Path="src/Aplicacao/eAgenda.Aplicacao.csproj" />
+  </Folder>
+</Solution>
