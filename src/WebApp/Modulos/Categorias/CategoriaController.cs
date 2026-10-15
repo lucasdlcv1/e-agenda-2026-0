@@ -17,7 +17,7 @@ public sealed class CategoriaController(ServicoCategoria servicoCategoria) : Con
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        CadastrarCategoriaViewModel viewModel = new("");
+        CadastrarCategoriaViewModel viewModel = new(string.Empty);
 
         return View(viewModel);
     }
@@ -25,14 +25,18 @@ public sealed class CategoriaController(ServicoCategoria servicoCategoria) : Con
     [HttpPost]
     public ActionResult Cadastrar(CadastrarCategoriaViewModel viewModel)
     {
-        Result<Guid> resultado = servicoCategoria
-            .Cadastrar(new CadastrarCategoriaDto(viewModel.Titulo));
+        CadastrarCategoriaDto dto = new(viewModel.Titulo ?? string.Empty);
+
+        Result<Guid> resultado = servicoCategoria.Cadastrar(dto);
 
         if (resultado.IsFailed)
         {
-            string mensagemErro = resultado.Errors.Select(e => e.Message).First();
+            foreach (IError erro in resultado.Errors)
+            {
+                string campo = erro.Metadata["Campo"].ToString() ?? string.Empty;
 
-            ModelState.AddModelError(string.Empty, mensagemErro);
+                ModelState.AddModelError(campo, erro.Message);
+            }
 
             return View(viewModel);
         }
@@ -43,24 +47,66 @@ public sealed class CategoriaController(ServicoCategoria servicoCategoria) : Con
     [HttpGet]
     public ActionResult Editar(Guid id)
     {
-        throw new NotImplementedException();
+        Result<CategoriaDto> resultado = servicoCategoria.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+            return RedirectToAction(nameof(Listar));
+
+        CategoriaDto dto = resultado.Value;
+
+        EditarCategoriaViewModel viewModel = new(
+            dto.Id,
+            dto.Titulo
+        );
+
+        return View(viewModel);
     }
 
     [HttpPost]
-    public ActionResult Editar(Guid id, EditarCategoriaViewModel viewModel)
+    public ActionResult Editar(EditarCategoriaViewModel viewModel)
     {
-        throw new NotImplementedException();
+        EditarCategoriaDto dto = new(
+            viewModel.Id,
+            viewModel.Titulo ?? string.Empty
+        );
+
+        Result resultado = servicoCategoria.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            foreach (IError erro in resultado.Errors)
+            {
+                string campo = erro.Metadata["Campo"].ToString() ?? string.Empty;
+
+                ModelState.AddModelError(campo, erro.Message);
+            }
+
+            return View(viewModel);
+        }
+
+        return RedirectToAction(nameof(Listar));
     }
 
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
-        throw new NotImplementedException();
+        Result<CategoriaDto> resultado = servicoCategoria.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+            return RedirectToAction(nameof(Listar));
+
+        CategoriaDto dto = resultado.Value;
+
+        ExcluirCategoriaViewModel viewModel = new(dto.Id, dto.Titulo);
+
+        return View(viewModel);
     }
 
     [HttpPost]
     public ActionResult Excluir(ExcluirCategoriaViewModel viewModel)
     {
-        throw new NotImplementedException();
+        servicoCategoria.Excluir(viewModel.Id);
+
+        return RedirectToAction(nameof(Listar));
     }
 }
