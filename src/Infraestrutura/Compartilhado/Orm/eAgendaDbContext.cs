@@ -1,5 +1,7 @@
 using eAgenda.Dominio.Modulos.Categorias;
+using eAgenda.Dominio.Modulos.Despesas;
 using eAgenda.Infraestrutura.Modulos.Categorias;
+using eAgenda.Infraestrutura.Modulos.Despesas;
 using Microsoft.EntityFrameworkCore;
 
 namespace eAgenda.Infraestrutura.Compartilhado.Orm;
@@ -8,8 +10,11 @@ public sealed class EAgendaDbContext(DbContextOptions<EAgendaDbContext> options)
 {
     public DbSet<Categoria> Categorias => Set<Categoria>();
 
+    public DbSet<Despesa> Despesas => Set<Despesa>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
+        modelBuilder.ApplyConfiguration(new DespesaConfiguration());
     }
 }
