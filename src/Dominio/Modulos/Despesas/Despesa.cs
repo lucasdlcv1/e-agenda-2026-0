@@ -26,7 +26,7 @@ public sealed class Despesa : EntidadeBase<Despesa>
         DataOcorrencia = dataOcorrencia;
         Valor = valor;
         FormaPagamento = formaPagamento;
-        Categorias = categorias;
+        Categorias = categorias ?? [];
     }
 
     public override List<ErroValidacao> Validar()

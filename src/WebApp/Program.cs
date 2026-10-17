@@ -10,7 +10,6 @@ builder.Services.AdicionarCamadaInfraestrutura(builder.Configuration);
 //Configura a camada de Aplicacao
 builder.Services.AdicionarCamadaAplicacao();
 
-
 //Configura a camada de apresentacao
 
 builder.Services.AddControllersWithViews().AddRazorOptions(options =>
