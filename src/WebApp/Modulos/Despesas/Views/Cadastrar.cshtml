@@ -7,6 +7,10 @@
 
 <form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Cadastrar"
       method="post">
+
+    <!-- Exibe todos os erros no topo do formulário (incluindo erros de negócio) -->
+    <div asp-validation-summary="All" class="text-danger mb-3 small fw-semibold"></div>
+
     <div class="mb-3">
         <label asp-for="Descricao" class="form-label fw-semibold text-primary text-uppercase small">Descrição</label>
         <input asp-for="Descricao" type="text" class="form-control">
@@ -41,11 +45,15 @@
                 <label asp-for="CategoriasIds"
                        class="form-label fw-semibold text-primary text-uppercase small">Categorias</label>
                 <select asp-for="CategoriasIds" class="form-select" multiple size="5">
-                    @foreach (CategoriaDespesaDto categoria in Model.CategoriasDisponiveis)
+                    @if (Model?.CategoriasDisponiveis != null)
                     {
-                        <option value="@categoria.Id">@categoria.Titulo</option>
+                        foreach (CategoriaDespesaDto categoria in Model.CategoriasDisponiveis)
+                        {
+                            <option value="@categoria.Id">@categoria.Titulo</option>
+                        }
                     }
                 </select>
+                <!-- Tag de validação específica para as categorias adicionada -->
                 <span asp-validation-for="CategoriasIds" class="text-danger small fw-semibold"></span>
             </div>
 
