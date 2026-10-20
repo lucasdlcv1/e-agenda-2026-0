@@ -51,7 +51,7 @@ jobs:
           dotnet-version: "10.x"
 
       - name: Restore dependencies
-        run: dotnet restore WebApp/EscolaDeCursos.WebApp.csproj
+        run: dotnet restore WebApp/eAgenda.WebApp.csproj
 
       - name: Install Entity Framework CLI
         run: dotnet tool install --global dotnet-ef
