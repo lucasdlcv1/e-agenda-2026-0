@@ -83,7 +83,6 @@ namespace eAgenda.Infraestrutura.Compartilhado.Orm.Migrations
             modelBuilder.Entity("eAgenda.Dominio.Modulos.Tarefas.ItemTarefa", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Concluido")
@@ -94,13 +93,14 @@ namespace eAgenda.Infraestrutura.Compartilhado.Orm.Migrations
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TarefaId");
 
-                    b.ToTable("ItemTarefa");
+                    b.ToTable("TBItensTarefa", (string)null);
                 });
 
             modelBuilder.Entity("eAgenda.Dominio.Modulos.Tarefas.Tarefa", b =>

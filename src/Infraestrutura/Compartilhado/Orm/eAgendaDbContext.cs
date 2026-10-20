@@ -16,10 +16,13 @@ public sealed class EAgendaDbContext(DbContextOptions<EAgendaDbContext> options)
 
     public DbSet<Tarefa> Tarefas => Set<Tarefa>();
 
+    public DbSet<ItemTarefa> ItemTarefas => Set<ItemTarefa>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
         modelBuilder.ApplyConfiguration(new DespesaConfiguration());
         modelBuilder.ApplyConfiguration(new TarefaConfiguration());
+        modelBuilder.ApplyConfiguration(new ItemTarefaConfiguration());
     }
 }
