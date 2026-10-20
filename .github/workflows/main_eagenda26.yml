@@ -93,7 +93,8 @@ jobs:
           az webapp config appsettings set `
             --name eagenda26 `
             --resource-group e-Agenda `
-            --settings "SQLSERVER_CONNECTIONSTRING=${{ secrets.SQLSERVER_CONNECTIONSTRING }}"
+              --settings `
+              "ConnectionStrings__SqlServer=${{ secrets.SQLSERVER_CONNECTIONSTRING }}"
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
