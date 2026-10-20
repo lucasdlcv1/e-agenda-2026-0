@@ -51,7 +51,7 @@ jobs:
           dotnet-version: "10.x"
 
       - name: Restore dependencies
-        run: dotnet restore WebApp/eAgenda.WebApp.csproj
+        run: dotnet restore src/WebApp/eAgenda.WebApp.csproj
 
       - name: Install Entity Framework CLI
         run: dotnet tool install --global dotnet-ef
@@ -61,7 +61,7 @@ jobs:
           SQLSERVER_CONNECTIONSTRING: ${{ secrets.SQLSERVER_CONNECTIONSTRING }}
         run: |
           dotnet ef database update `
-            --project "WebApp/eAgenda.WebApp.csproj" `
+            --project "src/WebApp/eAgenda.WebApp.csproj" `
             --configuration Release `
             --connection "$env:SQLSERVER_CONNECTIONSTRING"
 
