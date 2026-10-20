@@ -1,0 +1,17 @@
+@using eAgenda.Dominio.Modulos.Compromissos
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Edição de Compromisso";
+}
+
+@model SalvarCompromissoViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 720px;" asp-action="Editar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="All" class="text-danger small fw-semibold mb-3"></div>
+    <partial name="_Formulario" model="Model" />
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+        <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+    </div>
+</form>

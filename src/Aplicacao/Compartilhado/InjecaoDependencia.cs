@@ -1,5 +1,6 @@
 using System;
 using eAgenda.Aplicacao.Modulos.Categorias;
+using eAgenda.Aplicacao.Modulos.Compromissos;
 using eAgenda.Aplicacao.Modulos.Despesas;
 using eAgenda.Aplicacao.Modulos.Tarefas;
 using eAgenda.WebApp.Modulos.Contatos;
@@ -15,5 +16,6 @@ public static class InjecaoDependencia
         services.AddScoped<ServicoDespesa>();
         services.AddScoped<ServicoTarefa>();
         services.AddScoped<ServicoContato>();
+        services.AddScoped<ServicoCompromisso>();
     }
 }

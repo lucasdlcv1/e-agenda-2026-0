@@ -1,0 +1,26 @@
+@using eAgenda.Dominio.Modulos.Compromissos
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Exclusão de Compromisso";
+}
+
+@model ExcluirCompromissoViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 720px;" asp-action="Excluir" method="post">
+    <input type="hidden" asp-for="Id" />
+    <p class="text-secondary mb-3">Confirma a exclusão do compromisso abaixo?</p>
+
+    <dl class="row g-2">
+        <dt class="col-sm-4">Assunto</dt><dd class="col-sm-8">@Model.Assunto</dd>
+        <dt class="col-sm-4">Data</dt><dd class="col-sm-8">@Model.DataOcorrencia?.ToString("dd/MM/yyyy")</dd>
+        <dt class="col-sm-4">Horário</dt><dd class="col-sm-8">@Model.HoraInicio?.ToString("HH:mm") - @Model.HoraTermino?.ToString("HH:mm")</dd>
+        <dt class="col-sm-4">Tipo</dt><dd class="col-sm-8">@(Model.Tipo == TipoCompromisso.Remoto ? "Remoto" : "Presencial")</dd>
+        <dt class="col-sm-4">Link/Local</dt><dd class="col-sm-8 text-break">@Model.LinkOuLocal</dd>
+        <dt class="col-sm-4">Contato</dt><dd class="col-sm-8">@(Model.ContatoNome ?? "Não informado")</dd>
+    </dl>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Listar">Voltar</a>
+        <button class="btn btn-danger rounded-pill px-4" type="submit">Confirmar Exclusão</button>
+    </div>
+</form>

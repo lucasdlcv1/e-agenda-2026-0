@@ -1,0 +1,55 @@
+@using eAgenda.Dominio.Modulos.Compromissos
+@model SalvarCompromissoViewModel
+
+<div class="mb-3">
+    <label asp-for="Assunto" class="form-label fw-semibold text-primary text-uppercase small">Assunto</label>
+    <input asp-for="Assunto" type="text" maxlength="100" class="form-control">
+    <span asp-validation-for="Assunto" class="text-danger small fw-semibold"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="DataOcorrencia" class="form-label fw-semibold text-primary text-uppercase small">Data de ocorrência</label>
+    <input asp-for="DataOcorrencia" type="date" class="form-control">
+    <span asp-validation-for="DataOcorrencia" class="text-danger small fw-semibold"></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="HoraInicio" class="form-label fw-semibold text-primary text-uppercase small">Hora de início</label>
+        <input asp-for="HoraInicio" type="time" class="form-control">
+        <span asp-validation-for="HoraInicio" class="text-danger small fw-semibold"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="HoraTermino" class="form-label fw-semibold text-primary text-uppercase small">Hora de término</label>
+        <input asp-for="HoraTermino" type="time" class="form-control">
+        <span asp-validation-for="HoraTermino" class="text-danger small fw-semibold"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Tipo" class="form-label fw-semibold text-primary text-uppercase small">Tipo de compromisso</label>
+    <select asp-for="Tipo" class="form-select">
+        <option value="">Selecione...</option>
+        <option value="@TipoCompromisso.Remoto">Remoto</option>
+        <option value="@TipoCompromisso.Presencial">Presencial</option>
+    </select>
+    <span asp-validation-for="Tipo" class="text-danger small fw-semibold"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="LinkOuLocal" class="form-label fw-semibold text-primary text-uppercase small">Link ou local</label>
+    <input asp-for="LinkOuLocal" type="text" maxlength="500" class="form-control">
+    <span asp-validation-for="LinkOuLocal" class="text-danger small fw-semibold"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="ContatoId" class="form-label fw-semibold text-primary text-uppercase small">Contato (opcional)</label>
+    <select asp-for="ContatoId" class="form-select">
+        <option value="">Sem contato associado</option>
+        @foreach (ContatoCompromissoDto contato in Model.ContatosDisponiveis)
+        {
+            <option value="@contato.Id">@contato.Nome</option>
+        }
+    </select>
+    <span asp-validation-for="ContatoId" class="text-danger small fw-semibold"></span>
+</div>
