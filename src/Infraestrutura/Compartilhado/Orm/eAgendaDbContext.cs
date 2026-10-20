@@ -1,6 +1,8 @@
 using eAgenda.Dominio.Modulos.Categorias;
+using eAgenda.Dominio.Modulos.Contatos;
 using eAgenda.Dominio.Modulos.Despesas;
 using eAgenda.Dominio.Modulos.Tarefas;
+using eAgenda.Infra.Orm.Modulos.Contatos;
 using eAgenda.Infraestrutura.Modulos.Categorias;
 using eAgenda.Infraestrutura.Modulos.Despesas;
 using eAgenda.Infraestrutura.Modulos.Tarefas;
@@ -18,11 +20,14 @@ public sealed class EAgendaDbContext(DbContextOptions<EAgendaDbContext> options)
 
     public DbSet<ItemTarefa> ItemTarefas => Set<ItemTarefa>();
 
+    public DbSet<Contato> Contatos => Set<Contato>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
         modelBuilder.ApplyConfiguration(new DespesaConfiguration());
         modelBuilder.ApplyConfiguration(new TarefaConfiguration());
         modelBuilder.ApplyConfiguration(new ItemTarefaConfiguration());
+        modelBuilder.ApplyConfiguration(new ContatoConfiguration());
     }
 }
