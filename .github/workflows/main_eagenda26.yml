@@ -35,9 +35,41 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+
+  migrate:
     runs-on: windows-latest
     needs: build
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.x"
+
+      - name: Restore dependencies
+        run: dotnet restore WebApp/EscolaDeCursos.WebApp.csproj
+
+      - name: Install Entity Framework CLI
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Apply ORM Migrations
+        env:
+          SQLSERVER_CONNECTIONSTRING: ${{ secrets.SQLSERVER_CONNECTIONSTRING }}
+        run: |
+          dotnet ef database update `
+            --project "WebApp/eAgenda.WebApp.csproj" `
+            --configuration Release `
+            --connection "$env:SQLSERVER_CONNECTIONSTRING"
+
+
+
+  deploy:
+    runs-on: windows-latest
+    needs: [build, migrate]
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -47,7 +79,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -62,4 +94,3 @@ jobs:
           app-name: 'eagenda26'
           slot-name: 'Production'
           package: .
-          
