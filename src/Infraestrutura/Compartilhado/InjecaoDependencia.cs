@@ -8,6 +8,8 @@ using eAgenda.Infraestrutura.Modulos.Categorias;
 using eAgenda.Infraestrutura.Modulos.Compromissos;
 using eAgenda.Infraestrutura.Modulos.Despesas;
 using eAgenda.Infraestrutura.Modulos.Tarefas;
+using Infraestrutura.Compartilhado.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

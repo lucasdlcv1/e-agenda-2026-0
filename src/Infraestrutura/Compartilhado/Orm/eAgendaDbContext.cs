@@ -8,11 +8,15 @@ using eAgenda.Infraestrutura.Modulos.Categorias;
 using eAgenda.Infraestrutura.Modulos.Compromissos;
 using eAgenda.Infraestrutura.Modulos.Despesas;
 using eAgenda.Infraestrutura.Modulos.Tarefas;
+using Infraestrutura.Compartilhado.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace eAgenda.Infraestrutura.Compartilhado.Orm;
 
-public sealed class EAgendaDbContext(DbContextOptions<EAgendaDbContext> options) : DbContext(options)
+public sealed class EAgendaDbContext(DbContextOptions<EAgendaDbContext> options) :
+    IdentityDbContext<UsuarioIdentity, IdentityRole<Guid>, Guid>(options)
 {
     public DbSet<Categoria> Categorias => Set<Categoria>();
 
@@ -27,6 +31,8 @@ public sealed class EAgendaDbContext(DbContextOptions<EAgendaDbContext> options)
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
         modelBuilder.ApplyConfiguration(new DespesaConfiguration());
         modelBuilder.ApplyConfiguration(new TarefaConfiguration());

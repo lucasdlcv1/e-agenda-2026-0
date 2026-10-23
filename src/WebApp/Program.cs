@@ -1,6 +1,9 @@
 using eAgenda.Aplicacao.Compartilhado;
 using eAgenda.Infraestrutura.Compartilhado;
 using eAgenda.Infraestrutura.Compartilhado.Orm;
+using Infraestrutura.Compartilhado.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +27,30 @@ builder.Services.AddControllersWithViews().AddRazorOptions(options =>
        options.ViewLocationFormats.Add("/Compartilhado/Views/{0}.cshtml");
    });
 
+builder.Services.AddIdentity<UsuarioIdentity, IdentityRole<Guid>>(options =>
+ {
+     options.User.RequireUniqueEmail = true;
+     options.Password.RequiredLength = 8;
+     options.Password.RequireDigit = false;
+     options.Password.RequireLowercase = false;
+     options.Password.RequireUppercase = false;
+     options.Password.RequireNonAlphanumeric = false;
+     options.Password.RequiredLength = 6;
+ }
+ ).AddEntityFrameworkStores<EAgendaDbContext>().AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Autenticacao/Login";
+    options.AccessDeniedPath = "/Autenticacao/Login";
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser().Build();
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -38,6 +65,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapDefaultControllerRoute();
 
 app.Run();
