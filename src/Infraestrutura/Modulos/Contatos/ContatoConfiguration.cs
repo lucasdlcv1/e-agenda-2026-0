@@ -1,4 +1,5 @@
 using eAgenda.Dominio.Modulos.Contatos;
+using Infraestrutura.Compartilhado.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,15 +21,10 @@ public class ContatoConfiguration : IEntityTypeConfiguration<Contato>
             .HasColumnType("varchar(100)")
             .IsRequired();
 
-        builder.HasIndex(c => c.Email)
-            .IsUnique();
 
         builder.Property(c => c.Telefone)
             .HasColumnType("varchar(20)")
             .IsRequired();
-
-        builder.HasIndex(c => c.Telefone)
-            .IsUnique();
 
         builder.Property(c => c.Cargo)
             .HasColumnType("varchar(100)")
@@ -38,9 +34,16 @@ public class ContatoConfiguration : IEntityTypeConfiguration<Contato>
             .HasColumnType("varchar(100)")
             .IsRequired(false);
 
-        // builder.HasMany(c => c.Compromissos)
-        //.WithOne(cmp => cmp.Contato)
-        //.HasForeignKey(cmp => cmp.ContatoId)
-        //.OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(c => new { c.UsuarioId, c.Email })
+            .IsUnique();
+
+        builder.HasIndex(c => new { c.UsuarioId, c.Telefone })
+           .IsUnique();
+
+        builder.HasOne<UsuarioIdentity>()
+            .WithMany()
+            .HasForeignKey(c => c.UsuarioId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

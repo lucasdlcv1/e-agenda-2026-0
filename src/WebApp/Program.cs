@@ -51,6 +51,12 @@ builder.Services.AddAuthorization(options =>
         .RequireAuthenticatedUser().Build();
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser().Build();
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

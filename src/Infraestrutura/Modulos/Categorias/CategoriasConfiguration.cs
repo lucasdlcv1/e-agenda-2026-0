@@ -1,4 +1,5 @@
 using eAgenda.Dominio.Modulos.Categorias;
+using Infraestrutura.Compartilhado.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,7 +18,15 @@ public sealed class CategoriaConfiguration : IEntityTypeConfiguration<Categoria>
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.HasIndex(c => c.Titulo)
+        //Indice Composto
+
+
+        builder.HasIndex(c => new { c.UsuarioId, c.Titulo })
             .IsUnique();
+
+        builder.HasOne<UsuarioIdentity>()
+            .WithMany()
+            .HasForeignKey(c => c.UsuarioId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
