@@ -11,6 +11,17 @@ namespace eAgenda.Infraestrutura.Compartilhado.Orm.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(
+                """
+                DELETE FROM [TBDespesasCategorias];
+                DELETE FROM [TBItensTarefa];
+                DELETE FROM [TBCompromissos];
+                DELETE FROM [TBDespesas];
+                DELETE FROM [TBTarefas];
+                DELETE FROM [TBContato];
+                DELETE FROM [TBCategorias];
+                """);
+
             migrationBuilder.DropIndex(
                 name: "IX_TBContato_Email",
                 table: "TBContato");
