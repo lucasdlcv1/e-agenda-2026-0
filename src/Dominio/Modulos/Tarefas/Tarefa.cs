@@ -21,6 +21,12 @@ public sealed class Tarefa : EntidadeBase<Tarefa>
         RecalcularConclusao();
     }
 
+    public Tarefa(Guid usuarioId, string titulo, PrioridadeTarefa prioridade)
+        : this(titulo, prioridade)
+    {
+        UsuarioId = usuarioId;
+    }
+
     public void AdicionarItem(ItemTarefa item)
     {
         Itens.Add(item);

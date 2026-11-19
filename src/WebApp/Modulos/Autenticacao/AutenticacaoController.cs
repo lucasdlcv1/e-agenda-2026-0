@@ -16,6 +16,8 @@ public class AutenticacaoController(
     [AllowAnonymous]
     public ActionResult Cadastro()
     {
+
+
         if (User.Identity?.IsAuthenticated == true)
             return RedirectToAction(nameof(HomeController.Index), "Home");
 

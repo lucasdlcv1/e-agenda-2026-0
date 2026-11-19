@@ -1,4 +1,5 @@
 using eAgenda.Aplicacao.Compartilhado;
+using eAgenda.Dominio.Compartilhado;
 using eAgenda.Infraestrutura.Compartilhado;
 using eAgenda.Infraestrutura.Compartilhado.Orm;
 using Infraestrutura.Compartilhado.Identity;
@@ -56,6 +57,9 @@ builder.Services.AddAuthorization(options =>
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser().Build();
 });
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IProvedorUsuarioAtual, ProvedorUsuarioAtualHttp>();
 
 var app = builder.Build();
 

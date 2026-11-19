@@ -12,7 +12,8 @@ string Empresa
 );
 
 public record CadastrarContatoDto(
-       string Nome,
+    Guid UsuarioId,
+    string Nome,
 string Email,
 string Telefone,
 string Cargo,

@@ -34,6 +34,20 @@ public sealed class Compromisso : EntidadeBase<Compromisso>
         ContatoId = contatoId;
     }
 
+    public Compromisso(
+        Guid usuarioId,
+        string assunto,
+        DateOnly? dataOcorrencia,
+        TimeOnly? horaInicio,
+        TimeOnly? horaTermino,
+        TipoCompromisso? tipo,
+        string linkOuLocal,
+        Guid? contatoId)
+        : this(assunto, dataOcorrencia, horaInicio, horaTermino, tipo, linkOuLocal, contatoId)
+    {
+        UsuarioId = usuarioId;
+    }
+
     public override List<ErroValidacao> Validar()
     {
         List<ErroValidacao> erros = [];

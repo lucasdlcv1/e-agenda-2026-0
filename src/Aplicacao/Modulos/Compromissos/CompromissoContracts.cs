@@ -17,6 +17,7 @@ public record CompromissoDto(
 public record ContatoCompromissoDto(Guid Id, string Nome);
 
 public record SalvarCompromissoDto(
+    Guid UsuarioId,
     Guid? Id,
     string Assunto,
     DateOnly? DataOcorrencia,

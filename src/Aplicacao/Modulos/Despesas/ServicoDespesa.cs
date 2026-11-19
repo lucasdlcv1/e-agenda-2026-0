@@ -31,6 +31,7 @@ public sealed class ServicoDespesa(
             .ToList();
 
         Despesa despesa = new Despesa(
+            dto.UsuarioId,
             dto.Descricao,
             dto.DataOcorrencia,
             dto.Valor,

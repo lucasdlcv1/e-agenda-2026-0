@@ -112,6 +112,7 @@ public sealed class ServicoCompromisso(
     private static Compromisso CriarCompromisso(SalvarCompromissoDto dto)
     {
         return new Compromisso(
+            dto.UsuarioId,
             dto.Assunto,
             dto.DataOcorrencia,
             dto.HoraInicio,

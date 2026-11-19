@@ -8,7 +8,8 @@ public sealed class ServicoCategoria(IRepositorioCategoria repositorioCategoria)
 {
     public Result<Guid> Cadastrar(CadastrarCategoriaDto dto)
     {
-        Categoria categoria = new(dto.Titulo);
+
+        Categoria categoria = new(dto.UsuarioId, dto.Titulo);
 
         List<ErroValidacao> erros = categoria.Validar();
 
@@ -36,7 +37,7 @@ public sealed class ServicoCategoria(IRepositorioCategoria repositorioCategoria)
 
     public Result Editar(EditarCategoriaDto dto)
     {
-        Categoria categoriaAtualizada = new(dto.Titulo);
+        Categoria categoriaAtualizada = new(Guid.Empty, dto.Titulo);
 
         List<ErroValidacao> erros = categoriaAtualizada.Validar();
 
@@ -72,9 +73,9 @@ public sealed class ServicoCategoria(IRepositorioCategoria repositorioCategoria)
         return Result.Ok();
     }
 
-    public Result<CategoriaDto> SelecionarPorId(Guid id)
+    public Result<CategoriaDto> SelecionarPorId(Guid id, Guid usuarioId)
     {
-        Categoria? categoria = repositorioCategoria.SelecionarPorId(id);
+        Categoria? categoria = repositorioCategoria.SelecionarPorIdDoUsuario(id, usuarioId);
 
         if (categoria == null)
             return Result.Fail("Categoria não encontrada.");
@@ -82,9 +83,9 @@ public sealed class ServicoCategoria(IRepositorioCategoria repositorioCategoria)
         return Result.Ok(new CategoriaDto(categoria.Id, categoria.Titulo));
     }
 
-    public List<CategoriaDto> SelecionarTodos()
+    public List<CategoriaDto> SelecionarTodos(Guid usuarioId)
     {
-        List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
+        List<Categoria> categorias = repositorioCategoria.SelecionarTodosDoUsuario(usuarioId);
 
         return categorias
             .Select(c => new CategoriaDto(c.Id, c.Titulo))

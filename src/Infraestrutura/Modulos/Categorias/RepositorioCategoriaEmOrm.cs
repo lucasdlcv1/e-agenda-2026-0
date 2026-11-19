@@ -21,4 +21,20 @@ public sealed class RepositorioCategoriaEmOrm(EAgendaDbContext dbContext) :
             c.Titulo.ToLower() == tituloCategoria.ToLower()
         );
     }
+
+    public Categoria? SelecionarPorIdDoUsuario(Guid idSelecionado, Guid usuarioId)
+    {
+        return registros.FirstOrDefault(c =>
+            c.Id == idSelecionado &&
+            c.UsuarioId == usuarioId
+        );
+    }
+
+    public List<Categoria> SelecionarTodosDoUsuario(Guid usuarioId)
+    {
+        return registros
+        .OrderBy(c => c.Titulo)
+        .Where(c => c.UsuarioId == usuarioId)
+        .ToList();
+    }
 }

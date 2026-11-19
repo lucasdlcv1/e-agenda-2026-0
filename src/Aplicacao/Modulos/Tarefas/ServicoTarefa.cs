@@ -8,7 +8,7 @@ public sealed class ServicoTarefa(IRepositorioTarefa repositorioTarefa)
 {
     public Result<Guid> Cadastrar(CadastrarTarefaDto dto)
     {
-        Tarefa tarefa = new(dto.Titulo, dto.Prioridade);
+        Tarefa tarefa = new(dto.UsuarioId, dto.Titulo, dto.Prioridade);
 
         List<ErroValidacao> erros = tarefa.Validar();
 

@@ -29,6 +29,18 @@ public sealed class Despesa : EntidadeBase<Despesa>
         Categorias = categorias ?? [];
     }
 
+    public Despesa(
+        Guid usuarioId,
+        string descricao,
+        DateOnly dataOcorrencia,
+        decimal valor,
+        FormaPagamento formaPagamento,
+        List<Categoria> categorias
+    ) : this(descricao, dataOcorrencia, valor, formaPagamento, categorias)
+    {
+        UsuarioId = usuarioId;
+    }
+
     public override List<ErroValidacao> Validar()
     {
         List<ErroValidacao> erros = [];

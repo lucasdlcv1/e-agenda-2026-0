@@ -12,6 +12,7 @@ public sealed class ServicoContato(
     public Result<Guid> Cadastrar(CadastrarContatoDto dto)
     {
         Contato contato = new Contato(
+            dto.UsuarioId,
             dto.Nome,
             dto.Telefone,
             dto.Email,

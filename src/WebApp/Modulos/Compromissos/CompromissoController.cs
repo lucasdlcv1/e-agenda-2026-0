@@ -1,10 +1,14 @@
 using eAgenda.Aplicacao.Modulos.Compromissos;
+using eAgenda.Dominio.Compartilhado;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eAgenda.WebApp.Modulos.Compromissos;
 
-public sealed class CompromissoController(ServicoCompromisso servicoCompromisso) : Controller
+public sealed class CompromissoController(
+    ServicoCompromisso servicoCompromisso,
+    IProvedorUsuarioAtual usuarioAtual
+) : Controller
 {
     [HttpGet]
     public ActionResult Listar()
@@ -126,9 +130,10 @@ public sealed class CompromissoController(ServicoCompromisso servicoCompromisso)
         return viewModel with { ContatosDisponiveis = servicoCompromisso.SelecionarContatos() };
     }
 
-    private static SalvarCompromissoDto CriarDto(SalvarCompromissoViewModel viewModel)
+    private SalvarCompromissoDto CriarDto(SalvarCompromissoViewModel viewModel)
     {
         return new SalvarCompromissoDto(
+            usuarioAtual.Id,
             viewModel.Id,
             viewModel.Assunto,
             viewModel.DataOcorrencia,

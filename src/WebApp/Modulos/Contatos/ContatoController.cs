@@ -7,7 +7,8 @@ using eAgenda.Aplicacao.Modulos.Contatos;
 namespace eAgenda.WebApp.Modulos.Contatos;
 
 public sealed class ContatoController(
-    ServicoContato servicoContato
+    ServicoContato servicoContato,
+    IProvedorUsuarioAtual usuarioAtual
 ) : Controller
 {
     [HttpGet]
@@ -36,6 +37,7 @@ public sealed class ContatoController(
     public ActionResult Cadastrar(CadastrarContatoViewModel viewModel)
     {
         CadastrarContatoDto dto = new(
+            usuarioAtual.Id,
             viewModel.Nome,
             viewModel.Email,
             viewModel.Telefone,

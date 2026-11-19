@@ -25,6 +25,18 @@ public sealed class Contato : EntidadeBase<Contato>
         Empresa = empresa;
     }
 
+    public Contato(
+        Guid usuarioId,
+        string nome,
+        string telefone,
+        string email,
+        string cargo,
+        string empresa
+    ) : this(nome, telefone, email, cargo, empresa)
+    {
+        UsuarioId = usuarioId;
+    }
+
 
 
 
